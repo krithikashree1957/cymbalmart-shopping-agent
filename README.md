@@ -19,6 +19,18 @@ The agent seamlessly guides users through event planning by:
 
 ---
 
+## Screenshots
+
+### Party Planning Dashboard
+
+![CymbalMart Shopping Agent dashboard](assets/dashboard.png)
+
+### Add a New Party Plan
+
+![Add a new party plan](assets/add%20new%20plan.png)
+
+---
+
 ## ✨ Key Features
 
 ### 🎨 **AI Party Planner**
