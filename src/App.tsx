@@ -49,6 +49,7 @@ export default function App() {
   const [isAgentChatOpen, setIsAgentChatOpen] = useState<boolean>(false);
   const [agentChatPrompt, setAgentChatPrompt] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [isListening, setIsListening] = useState<boolean>(false);
 
   // Initialize with saved plan or bootstrap default
   useEffect(() => {
@@ -164,6 +165,55 @@ export default function App() {
     setIsAgentChatOpen(true);
   };
 
+  const toggleVoiceControl = () => {
+    const browserWindow = window as typeof window & {
+      SpeechRecognition?: new () => any;
+      webkitSpeechRecognition?: new () => any;
+    };
+    const SpeechRecognition = browserWindow.SpeechRecognition || browserWindow.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      window.alert("Web Speech API is not supported in this browser. Try Chrome.");
+      return;
+    }
+
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+    recognition.onresult = (event: any) => {
+      const name = event.results?.[0]?.[0]?.transcript?.trim();
+      if (!name || !currentPlan) return;
+
+      const item = {
+        id: `voice-item-${Date.now()}`,
+        name,
+        category: "Voice additions",
+        quantity: "1 item",
+        estimatedCost: 10,
+        storeType: "Supermarket / Grocery" as const,
+        priority: "Recommended" as const,
+        isChecked: false,
+        isCustom: true,
+        status: "to_buy" as const,
+      };
+
+      handleUpdateCurrentPlan({
+        ...currentPlan,
+        shoppingItems: [item, ...(currentPlan.shoppingItems || [])],
+      });
+    };
+    recognition.start();
+  };
+
   const handlePrintDossier = () => {
     if (!currentPlan) return;
     const printWindow = window.open("", "_blank");
@@ -200,6 +250,8 @@ export default function App() {
       {/* Navigation Header */}
       <Header
         currentPlan={currentPlan}
+        isListening={isListening}
+        onToggleVoiceControl={toggleVoiceControl}
         onOpenWizard={() => setIsWizardOpen(true)}
         onOpenDriveExport={() => setIsDriveModalOpen(true)}
         onPrintDossier={handlePrintDossier}
