@@ -1,9 +1,11 @@
 import React from "react";
-import { Sparkles, Calendar, PlusCircle, CloudUpload, Share2, Printer, CheckCircle2 } from "lucide-react";
+import { Sparkles, PlusCircle, CloudUpload, Printer, Mic, MicOff } from "lucide-react";
 import { PartyPlan } from "../types";
 
 interface HeaderProps {
   currentPlan: PartyPlan | null;
+  isListening: boolean;
+  onToggleVoiceControl: () => void;
   onOpenWizard: () => void;
   onOpenDriveExport: () => void;
   onPrintDossier: () => void;
@@ -13,6 +15,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   currentPlan,
+  isListening,
+  onToggleVoiceControl,
   onOpenWizard,
   onOpenDriveExport,
   onPrintDossier,
@@ -44,6 +48,21 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            id="btn-voice-control"
+            onClick={onToggleVoiceControl}
+            title={isListening ? "Stop voice control" : "Add an item by voice"}
+            aria-label={isListening ? "Stop voice control" : "Add an item by voice"}
+            className={`p-2 rounded-lg border text-xs font-medium flex items-center gap-1.5 transition-colors ${
+              isListening
+                ? "bg-rose-500 text-white border-rose-400 animate-pulse"
+                : "bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border-slate-700"
+            }`}
+          >
+            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            <span className="hidden sm:inline">{isListening ? "Listening..." : "Voice Add"}</span>
+          </button>
+
           {savedPlans.length > 1 && (
             <div className="relative hidden md:block">
               <select
