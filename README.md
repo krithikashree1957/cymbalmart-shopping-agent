@@ -9,7 +9,7 @@
 
 ## 📋 Project Overview
 
-The **CymbalMart Shopping Agent** is an intelligent event planning application that transforms Critical User Journeys (CUJs) into curated, budget-conscious shopping lists. Leveraging Google's Gemini API and React, this application empowers users to plan memorable events while maintaining strict budget constraints.
+The **CymbalMart Shopping Agent** is an intelligent event planning application that transforms Critical User Journeys (CUJs) into curated, budget-conscious shopping lists. Leveraging Google's Gemi[...]
 
 The agent seamlessly guides users through event planning by:
 - **Generating comprehensive event themes** with curated menus and portion guides
@@ -143,3 +143,9 @@ This project is provided as-is for portfolio and educational purposes.
 ---
 
 **Built with ❤️ using Gemini AI & React**
+
+---
+
+Author: Krithika Shree K
+
+GitHub: [@krithikashree1957](https://github.com/krithikashree1957)
