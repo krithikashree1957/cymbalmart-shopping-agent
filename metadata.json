@@ -1,0 +1,6 @@
+{
+  "name": "Party Planner Shopping Agent",
+  "description": "An intelligent AI party planning and shopping assistant that crafts customized party plans, organizes shopping lists by store department, estimates budgets, manages guest dietary needs, and exports everything to Google Drive.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
